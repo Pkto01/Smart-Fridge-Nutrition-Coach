@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 from starlette.templating import _TemplateResponse
 
-from ..models import activity, goal
+from ..models import activity, goal, sexe
 
 router: APIRouter = APIRouter()
 
@@ -17,13 +17,13 @@ templates: Jinja2Templates = Jinja2Templates(directory="static/templates")
 
 ACTIVITY = activity.ActivityLevelEnum
 GOAL = goal.GoalEnum
+SEXE = sexe.SexeEnum
 
 @router.get(path="/user/{id}", response_class=HTMLResponse)
 async def read_users(request: Request, id: int) -> _TemplateResponse:
-    # activityList: list[activity.ActivityLevelEnum] = []
-    # goalList: list[goal.GoalEnum] = []
     return templates.TemplateResponse(request=request, name="index.html", status_code=200, context={
         "id": id,
         "activity": ACTIVITY,
-        "goal": GOAL
+        "goal": GOAL,
+        "sexe": SEXE
     })

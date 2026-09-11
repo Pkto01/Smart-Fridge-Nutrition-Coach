@@ -19,6 +19,16 @@
                 <input type="text" id="lname" name="name" />
                 <label for="username">Nom d'utilisateur</label>
                 <input type="text" name="username" id="username" />
+                <label for="email">Email : </label>
+                <input type="email" name="email" id="email">
+                <label for="pwd">Mot de passe :</label>
+                <input type="password" name="password" id="password">
+                <label for="sexe">Sexe</label>
+                <select name="sexe">
+                        {% for nom, membre in sexe.__members__.items() %}
+                        <option value="{{ nom }}">{{ membre.value }}</option>
+                        {% endfor %}
+                </select>
                 <label for="weight">Poids (en kg) : </label>
                 <input type="number" name="weight" id="weight" />
                 <label for="height">Taille (en cm) : </label>

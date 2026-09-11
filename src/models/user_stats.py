@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 from .activity import ActivityLevelEnum
 from .goal import GoalEnum
+from .sexe import SexeEnum
 
 
 class User_Stats(BaseModel):
@@ -10,6 +11,7 @@ class User_Stats(BaseModel):
     Username: str
     Email: str
     Password: str  # TODO : A HASH
+    Sexe: SexeEnum
     Poids: float  # En kg
     Taille: int  # en cm
     Age: int

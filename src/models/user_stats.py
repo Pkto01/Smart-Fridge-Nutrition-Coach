@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from pydantic.networks import EmailStr
 
 from .activity import ActivityLevelEnum
 from .goal import GoalEnum
@@ -9,7 +10,7 @@ class User_Stats(BaseModel):
     FirstName: str
     LastName: str
     Username: str
-    Email: str
+    Email: EmailStr
     Password: str  # TODO : A HASH
     Sexe: SexeEnum
     Poids: float  # En kg

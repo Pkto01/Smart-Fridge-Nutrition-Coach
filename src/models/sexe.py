@@ -1,9 +1,7 @@
-from enum import Enum
-
-from pydantic import BaseModel
+from enum import StrEnum
 
 
-class SexeEnum(Enum):
+class SexeEnum(StrEnum):
     Homme = "Homme"
     Femme = "Femme"
     NoneP = "Non précisé"

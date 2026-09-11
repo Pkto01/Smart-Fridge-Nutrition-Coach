@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class ActivityLevelEnum(Enum):
+class ActivityLevelEnum(StrEnum):
     Tres_Faible = "Très faible"
     Faible = "Faible"
     Moyen = "Moyen"

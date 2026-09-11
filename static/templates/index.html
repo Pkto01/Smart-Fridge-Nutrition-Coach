@@ -10,46 +10,89 @@
         />
     </head>
     <body>
-        je suis le user avec l'id {{ id }}
+        Je suis l'utilisateur avec l'id {{ id }}
         <div class="form-container">
-            <form action="/api/user_stats" method="post">
+            <form action="/api/user_stats/" method="post">
                 <label for="fname">Prénom :</label>
-                <input type="text" id="fname" name="fname" />
-                <label for="lname">Nom de Famille : </label>
-                <input type="text" id="lname" name="name" />
-                <label for="username">Nom d'utilisateur</label>
-                <input type="text" name="username" id="username" />
-                <label for="email">Email : </label>
-                <input type="email" name="email" id="email">
-                <label for="pwd">Mot de passe :</label>
-                <input type="password" name="password" id="password">
-                <label for="sexe">Sexe</label>
-                <select name="sexe">
-                        {% for nom, membre in sexe.__members__.items() %}
-                        <option value="{{ nom }}">{{ membre.value }}</option>
-                        {% endfor %}
+                <input type="text" id="fname" name="FirstName" required />
+
+                <label for="lname">Nom de Famille :</label>
+                <input type="text" id="lname" name="LastName" required />
+
+                <label for="username">Nom d'utilisateur :</label>
+                <input type="text" id="username" name="Username" required />
+
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="Email" required />
+
+                <label for="password">Mot de passe :</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="Password"
+                    minlength="8"
+                    required
+                />
+
+                <label for="sexe">Sexe :</label>
+                <select name="Sexe" id="sexe" required>
+                    {% for nom, membre in sexe.__members__.items() %}
+                    <option value="{{ membre.value }}">{{ membre.value }}</option>
+                    {% endfor %}
                 </select>
-                <label for="weight">Poids (en kg) : </label>
-                <input type="number" name="weight" id="weight" />
-                <label for="height">Taille (en cm) : </label>
-                <input type="number" name="height" id="height" />
-                <label for="age">Âge : </label>
-                <input type="number" name="age" id="age" />
-                <label for="activity_level">Niveau d'activité : </label>
-                <select name="activity_level">
+
+                <label for="weight">Poids (en kg) :</label>
+                <input
+                    type="number"
+                    id="weight"
+                    name="Poids"
+                    step="0.1"
+                    required
+                />
+
+                <label for="height">Taille (en cm) :</label>
+                <input type="number" id="height" name="Taille" required />
+
+                <label for="age">Âge :</label>
+                <input type="number" id="age" name="Age" required />
+
+                <label for="activity_level">Niveau d'activité :</label>
+                <select name="activity_level" id="ActivityLevel" required>
                     {% for nom, membre in activity.__members__.items() %}
-                    <option value="{{ nom }}">{{ membre.value }}</option>
+                    <option value="{{ membre.value }}">{{ membre.value }}</option>
                     {% endfor %}
                 </select>
-                <label for="goal">But : </label>
-                <select name="goal">
+
+                <label for="goal">But :</label>
+                <select name="Goal" id="goal" required>
                     {% for nom, membre in goal.__members__.items() %}
-                    <option value="{{ nom }}">{{ membre.value }}</option>
+                    <option value="{{ membre.value }}">{{ membre.value }}</option>
                     {% endfor %}
                 </select>
-                <input type="submit"  value="Submit">
-                <input type="reset" name="reset">
+
+                <input type="submit" value="Submit" />
+                <input type="reset" value="Reset" />
             </form>
         </div>
     </body>
+    <script>
+        document.querySelector("form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const data = Object.fromEntries(new FormData(form).entries());
+
+            // conversions de types + renommage du champ mal nommé
+            data.Poids = parseFloat(data.Poids);
+            data.Taille = parseInt(data.Taille);
+            data.Age = parseInt(data.Age);
+            data.ActivityLevel = data.activity_level;
+            delete data.activity_level;
+
+            const res = await fetch("/api/user_stats/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+        });
+    </script>
 </html>

@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class GoalEnum(Enum):
+class GoalEnum(StrEnum):
     Lose =  "Perdre du poids"
     Stable = "Rester au même stade"
     Gain = "Gagner du poids"

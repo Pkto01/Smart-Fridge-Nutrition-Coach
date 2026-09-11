@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LeFridge - User</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', path='/assets/css/styles.css') }}"
+        />
+    </head>
+    <body>
+        je suis le user avec l'id {{ id }}
+        <div class="form-container">
+            <form action="/api/user_stats" method="post">
+                <label for="fname">Prénom :</label>
+                <input type="text" id="fname" name="fname" />
+                <label for="lname">Nom de Famille : </label>
+                <input type="text" id="lname" name="name" />
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" name="username" id="username" />
+                <label for="weight">Poids (en kg) : </label>
+                <input type="number" name="weight" id="weight" />
+                <label for="height">Taille (en cm) : </label>
+                <input type="number" name="height" id="height" />
+                <label for="age">Âge : </label>
+                <input type="number" name="age" id="age" />
+                <label for="activity_level">Niveau d'activité : </label>
+                <select name="activity_level">
+                    {% for nom, membre in activity.__members__.items() %}
+                    <option value="{{ nom }}">{{ membre.value }}</option>
+                    {% endfor %}
+                </select>
+                <label for="goal">But : </label>
+                <select name="goal">
+                    {% for nom, membre in goal.__members__.items() %}
+                    <option value="{{ nom }}">{{ membre.value }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit"  value="Submit">
+                <input type="reset" name="reset">
+            </form>
+        </div>
+    </body>
+</html>

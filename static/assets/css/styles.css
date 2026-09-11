@@ -1,0 +1,14 @@
+:root {
+    --primary-color: white;
+    --secondary-color: cyan;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--primary-color);
+}
+
+.form-container {
+    display: flex;
+    flex-direction: row;
+}

@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 
-from .src.routes import health, root
+from .src.routes import health, root, user
 
 app: FastAPI = FastAPI()
 
 app.include_router(root.router)
 app.include_router(health.router)
+app.include_router(user.router)

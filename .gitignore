@@ -1,6 +1,6 @@
 .env
-# Python venv
+# Python 
+__pycache__/
 venv/
 # NixOS related
 flake.lock
-

@@ -3,10 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 
-from .src.routes import health, root, user, user_stat, debug, filtered
-
-
-from .src.routes import health, root, user, user_stat, debug, filtered
+from .src.routes import health, root, user, user_stat, debug, filtered, profile
 from .src.databaseConn.database import init_db, pool
 
 
@@ -25,4 +22,6 @@ app.include_router(user.router)
 app.include_router(user_stat.router)
 app.include_router(filtered.router)
 app.include_router(debug.router)
+
+app.include_router(profile.router)
 

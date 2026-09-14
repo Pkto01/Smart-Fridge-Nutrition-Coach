@@ -1,6 +1,9 @@
 .env
-# Python 
+# Python cache
 __pycache__/
+src/routes/__pycache__/
+src/models/__pycache__/
+# Python venv
 venv/
 # NixOS related
 flake.lock

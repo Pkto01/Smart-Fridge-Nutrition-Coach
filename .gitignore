@@ -3,7 +3,9 @@
 __pycache__/
 src/routes/__pycache__/
 src/models/__pycache__/
+src/api/__pycache__/
 # Python venv
 venv/
 # NixOS related
 flake.lock
+

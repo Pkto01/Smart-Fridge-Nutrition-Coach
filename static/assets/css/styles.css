@@ -3,6 +3,56 @@
     --secondary-color: cyan;
 }
 
+/* Reset default margin/padding for nav and ul */
+.navbar, .nav-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Navbar container */
+.navbar {
+  background-color: #2c3e50;
+  padding: 1rem 2rem;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Navigation list */
+.nav-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Navigation items */
+.nav-item {
+  position: relative;
+}
+
+/* Navigation links */
+.nav-link {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for links */
+.nav-link:hover {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+/* Active link (optional) */
+.nav-link.active {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: var(--primary-color);

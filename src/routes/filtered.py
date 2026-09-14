@@ -5,8 +5,7 @@ from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 from starlette.templating import _TemplateResponse
 
-from ...src.api import the_meal_db
-from ..models import activity, goal, sexe
+from ..api.the_meal_db import get_meals_categories
 
 router: APIRouter = APIRouter()
 
@@ -15,24 +14,14 @@ router.mount(path="/static", app=StaticFiles(directory="static"), name="static")
 
 templates: Jinja2Templates = Jinja2Templates(directory="static/templates")
 
-
-ACTIVITY = activity.ActivityLevelEnum
-GOAL = goal.GoalEnum
-SEXE = sexe.SexeEnum
-
-
-@router.get(path="/user/{id}", response_class=HTMLResponse)
-async def read_users(request: Request, id: int) -> _TemplateResponse:
+@router.get(path="/user/{id}/{filter}")
+async def read_filtered(request: Request, id:int, filter: str) -> _TemplateResponse:
     return templates.TemplateResponse(
         request=request,
-        name="index.html",
+        name="filtered.html",
         status_code=200,
         context={
             "id": id,
-            "activity": ACTIVITY,
-            "goal": GOAL,
-            "sexe": SEXE,
-            # Front relative
-            "meals": await the_meal_db.get_meals_categories(),
+            "filter" : filter
         },
     )

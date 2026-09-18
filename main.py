@@ -22,5 +22,6 @@ app.include_router(user.router)
 app.include_router(user_stat.router)
 app.include_router(filtered.router)
 app.include_router(debug.router)
+app.include_router(details.router)
 
 app.include_router(profile.router)

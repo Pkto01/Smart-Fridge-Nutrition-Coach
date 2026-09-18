@@ -11,7 +11,7 @@ from ...src.databaseConn.getUser import get_user_by_id
 
 router: APIRouter = APIRouter()
 
-templates: Jinja2Templates = Jinja2Templates(directory="static/profile")
+templates: Jinja2Templates = Jinja2Templates(directory="static/templates/")
 
 @router.get(path="/profile/{id}", response_class=HTMLResponse)
 async def read_users(request: Request, id: int, conn: Connection = Depends(get_db)) -> _TemplateResponse:

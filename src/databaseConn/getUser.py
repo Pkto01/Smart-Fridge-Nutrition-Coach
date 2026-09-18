@@ -9,7 +9,7 @@ def get_user_by_id(user_id: int, conn: Connection) -> dict:
     with conn.cursor() as cursor:
         cursor.execute(
             """
-            SELECT id, email, age, gender, weight, height, activity_level, goal, created_at 
+            SELECT id, first_name, last_name, username, email, age, gender, weight, height, ActivityLevel, goal
             FROM users 
             WHERE id = %s;
             """,

@@ -9,3 +9,6 @@ venv/
 # NixOS related
 flake.lock
 
+# PostGreSQL
+.pg_data/
+.pg_socket/

@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>LeFridge - {{ filter }}</title>
+        <title>LeFridge - Détails</title>
         <link
             rel="stylesheet"
             href="{{ url_for('static', path='/assets/css/styles.css') }}"
@@ -11,20 +11,23 @@
     </head>
     <body>
         <header>
-            <h1>Résultats pour "{{ filter }}"</h1>
+            {% for meal in meals %}
+            <h1>Recette de "{{ meal.strMeal }}"</h1>
+            {% endfor %}
             <a href="/user/{{ id }}" class="back-link">← Retour à mon profil</a>
         </header>
 
-        <div class="filter-result">
+        <div class="details-result">
             {% for meal in meals %}
             <div class="meal-card" id="{{ meal.idMeal }}">
-                <a href="/user/{{id}}/details/{{meal.idMeal}}">
-                    <img
-                        src="{{ meal.strMealThumb }}/medium"
-                        alt="{{ meal.strMeal }}"
-                    />
-                    <p>{{ meal.strMeal }}</p>
-                </a>
+                <img
+                    src="{{ meal.strMealThumb }}/large"
+                    alt="{{ meal.strMeal }}"
+                />
+                <p>{{ meal.strMeal }}</p>
+            </div>
+            <div class="recipe">
+                {{ meal.strInstructions }}
             </div>
             {% endfor %}
         </div>

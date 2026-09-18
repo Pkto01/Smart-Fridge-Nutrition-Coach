@@ -9,16 +9,17 @@
             href="{{ url_for('static', path='/assets/css/styles.css') }}"
         />
     </head>
-    <header>
-        <nav class="navbar"">
-            <ul class="nav-list">
-            {% for elem in meals %}
-            <li><a href="/user/{{id}}/{{elem}}">{{elem}}</a></li>
-            {% endfor %}
-            </ul>
-        </nav>
-    </header>
+
     <body>
+        <header>
+            <nav class="navbar"">
+                <ul class="nav-list">
+                {% for elem in meals %}
+                <li><a href="/user/{{id}}/{{elem}}">{{elem}}</a></li>
+                {% endfor %}
+                </ul>
+            </nav>
+        </header>
         Je suis l'utilisateur avec l'id {{ id }}
         <div class="form-container">
             <form action="/api/user_stats/" method="post">

@@ -17,9 +17,9 @@ router.mount(path="/static", app=StaticFiles(directory="static"), name="static")
 templates: Jinja2Templates = Jinja2Templates(directory="static/templates")
 
 
-async def filter_process(filter: str) -> list[dict]:
+async def details_process(id: int) -> list[dict]:
     res: list[dict] = []
-    url: str = f"https://www.themealdb.com/api/json/v1/1/filter.php?c={filter}"
+    url: str = f"https://www.themealdb.com/api/json/v1/1/lookup.php?i={id}"
     async with httpx.AsyncClient() as client:
         response = await client.get(url)
         if response.status_code == 200:
@@ -27,16 +27,16 @@ async def filter_process(filter: str) -> list[dict]:
             res = data.get("meals", [])
     return res
 
-@router.get("/user/{id}/{filter}")
-async def read_filtered(request: Request, id: int, filter: str) -> _TemplateResponse:
-    meals = await filter_process(filter)
+@router.get("/user/{id}/details/{meal_id}")
+async def read_details(request: Request, id: int, meal_id: int) -> _TemplateResponse:
+    meals = await details_process(meal_id)
     return templates.TemplateResponse(
         request=request,
-        name="filtered.html",
+        name="details.html",
         status_code=200,
         context={
             "id": id,
-            "filter": filter,
             "meals": meals
         },
     )
+

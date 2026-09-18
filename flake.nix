@@ -19,6 +19,7 @@
          source ./venv/bin/activate
 
          pip install fastapi pydantic fastapi[standard] requests
+         fastapi dev main.py
         '';
       };
     };

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LeFridge - Profil de {{ user.username }}</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', path='/assets/css/styles.css') }}"
+        />
+    </head>
+    <body>
+        <main class="container">
+            <h1>Profil Utilisateur</h1>
+            
+            <div class="profile-card">
+                <h2>@{{ user.username }}</h2>
+                <h3>{{ user.first_name}} {{ user.last_name }}</h3>
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                
+                <hr />  
+                
+                <h3>Informations physiques & objectifs</h3>
+                <ul>
+                    <li><strong>Genre :</strong> {{ user.gender }}</li>
+                    <li><strong>Âge :</strong> {{ user.age }} ans</li>
+                    <li><strong>Poids :</strong> {{ user.weight }} kg</li>
+                    <li><strong>Taille :</strong> {{ user.height }} cm</li>
+                    <li><strong>Niveau d'activité :</strong> {{ user.activitylevel }}</li>
+                    <li><strong>Objectif :</strong> {{ user.goal }}</li>
+                </ul>
+            </div>
+        </main>
+    </body>
+</html>

@@ -53,29 +53,29 @@
             <section class="food-entry">
                 <div class="food-entry-header">
                     <h2>{{ result.food.name }}</h2>
-                    <span class="food-category">{{ result.food.category }}</span>
+                    <span class="food-category"
+                        >{{ result.food.category }}</span
+                    >
                 </div>
 
+                {% if result.meals != [] %}
                 <div class="food-entry-body">
                     <table class="nutrients-table">
-                        <caption>Nutriments</caption>
+                        <caption>
+                            Nutriments
+                        </caption>
                         <tbody>
-                            
-                            {% set n = result.food.nutrients %}
-                            {% for label, unit in [
-                                ("Energy", "kcal"),
-                                ("Protein", "g"),
-                                ("Total lipid (fat)", "g"),
-                                ("Carbohydrate, by difference", "g"),
-                                ("Fiber, total dietary", "g"),
-                                ("Total Sugars", "g"),
-                                ("Sodium, Na", "mg"),
-                            ] %}
+                            {% set n = result.food.nutrients %} {% for label,
+                            unit in [ ("Energy", "kcal"), ("Protein", "g"),
+                            ("Total lipid (fat)", "g"), ("Carbohydrate, by
+                            difference", "g"), ("Fiber, total dietary", "g"),
+                            ("Total Sugars", "g"), ("Sodium, Na", "mg"), ] %}
                             <tr>
                                 <th scope="row">{{ label }}</th>
                                 <td>
-                                    {% if n and label in n %} {{ n[label].value }}
-                                    {{ n[label].unit }} {% else %} — {% endif %}
+                                    {% if n and label in n %} {{ n[label].value
+                                    }} {{ n[label].unit }} {% else %} — {% endif
+                                    %}
                                 </td>
                             </tr>
                             {% endfor %}
@@ -108,6 +108,7 @@
                         {% endif %}
                     </div>
                 </div>
+                {% endif %}
             </section>
             {% endfor %}
         </div>

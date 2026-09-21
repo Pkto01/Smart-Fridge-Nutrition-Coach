@@ -3,8 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from .src.databaseConn.database import init_db, pool
-from .src.routes import debug, details, filtered, health, root, user, user_stat, meals
-
+from .src.routes import debug, details, filtered, health, meals, root, user, user_stat
 
 
 @asynccontextmanager

@@ -1,8 +1,8 @@
-import psycopg
-from psycopg.rows import dict_row
-from psycopg_pool import ConnectionPool
 import os
+
+import psycopg
 from dotenv import load_dotenv
+from psycopg.rows import dict_row
 from psycopg_pool import ConnectionPool
 
 load_dotenv()

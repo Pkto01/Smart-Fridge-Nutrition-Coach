@@ -23,10 +23,8 @@ async def get_food(food: str, limit: int = 5) -> List[Dict[str, Any]]:
     async with httpx.AsyncClient() as client:
         try:
             response = await client.get(url)
-            response.raise_for_status()  # Lève une erreur si le statut HTTP est >= 400
+            response.raise_for_status()
             data = response.json()
-
-            # Vérifie que "foods" existe et est une liste
             foods_list = data.get("foods", [])
             if not isinstance(foods_list, list):
                 raise HTTPException(

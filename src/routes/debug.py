@@ -1,8 +1,10 @@
 from fastapi import APIRouter
 
+from ..api.usda import get_food
+
 router: APIRouter = APIRouter()
 
 
-@router.get(path="/debug")
-async def read_debug():
-    return {"message": "DEBUG"}
+@router.get("/debug/{food}")
+async def search_food(food: str):
+    return await get_food(food)

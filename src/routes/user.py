@@ -21,14 +21,13 @@ GOAL = goal.GoalEnum
 SEXE = sexe.SexeEnum
 
 
-@router.get(path="/user/{id}", response_class=HTMLResponse)
-async def read_users(request: Request, id: int) -> _TemplateResponse:
+@router.get(path="/create_user", response_class=HTMLResponse)
+async def read_users(request: Request) -> _TemplateResponse:
     return templates.TemplateResponse(
         request=request,
-        name="index.html",
+        name="create_profile.html",
         status_code=200,
         context={
-            "id": id,
             "activity": ACTIVITY,
             "goal": GOAL,
             "sexe": SEXE,

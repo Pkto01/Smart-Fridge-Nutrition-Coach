@@ -209,3 +209,153 @@ header h1 {
         font-size: 1.5rem;
     }
 }
+
+/* ===== RECHERCHE D'ALIMENTS (page search.html) ===== */
+
+.search-form-container form {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.search-form-container label {
+    margin-bottom: 0.3rem;
+}
+
+.search-form-container input[type="text"] {
+    flex: 1 1 260px;
+}
+
+.search-form-container input[type="number"] {
+    width: 110px;
+}
+
+.no-results {
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin: 2rem 0;
+}
+
+.search-results {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.food-entry {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+}
+
+.food-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+
+.food-entry-header h2 {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+}
+
+.food-category {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.food-entry-body {
+    display: grid;
+    grid-template-columns: minmax(220px, 300px) 1fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .food-entry-body {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Table nutriments, dans le style des cartes existantes */
+.nutrients-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-light);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.nutrients-table caption {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.nutrients-table th,
+.nutrients-table td {
+    padding: 0.55rem 1rem;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+}
+
+.nutrients-table th {
+    text-align: left;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.nutrients-table td {
+    text-align: right;
+    color: #34495e;
+}
+
+.nutrients-table tr:last-child th,
+.nutrients-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Bloc recettes correspondantes */
+.matched-note {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin-bottom: 0.8rem;
+}
+
+.no-meals {
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+/* Réutilise .filter-result / .meal-card existants pour la grille de recettes,
+   mais réduit un peu la taille dans ce contexte de sous-section */
+.food-entry-body .filter-result {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    padding: 0;
+}
+
+.food-entry-body .filter-result img {
+    height: 130px;
+}
+
+.food-entry-body .filter-result a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}

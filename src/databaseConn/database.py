@@ -7,9 +7,11 @@ from psycopg_pool import ConnectionPool
 
 load_dotenv()
 
-DB_URI = os.getenv("DB_URI")
+DB_URL = os.getenv("DB_URL")
+print("DATABASE URL", DB_URL)
 
-pool = ConnectionPool(conninfo=DB_URI, open=False)
+
+pool = ConnectionPool(conninfo=DB_URL, open=False)
 
 
 def init_db():

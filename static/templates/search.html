@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LeFridge - Recherche</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', path='/assets/css/styles.css') }}"
+        />
+    </head>
+    <body>
+        <header>
+            <h1>Chercher un aliment</h1>
+            <nav class="navbar">
+                <ul class="nav-list">
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/search">Recherche</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="form-container search-form-container">
+            <form action="/search" method="get">
+                <label for="query">Aliment :</label>
+                <input
+                    type="text"
+                    id="query"
+                    name="query"
+                    value="{{ query or '' }}"
+                    placeholder="ex : chicken, potato, cheddar cheese"
+                    required
+                />
+
+                <label for="limit">Nombre de résultats :</label>
+                <input
+                    type="number"
+                    id="limit"
+                    name="limit"
+                    value="{{ limit or 5 }}"
+                    min="1"
+                    max="25"
+                />
+
+                <input type="submit" value="Chercher" />
+                <input type="reset" value="Réinitialiser" />
+            </form>
+        </div>
+
+        {% if results is defined and results %}
+        <div class="search-results">
+            {% for result in results %}
+            <section class="food-entry">
+                <div class="food-entry-header">
+                    <h2>{{ result.food.name }}</h2>
+                    <span class="food-category">{{ result.food.category }}</span>
+                </div>
+
+                <div class="food-entry-body">
+                    <table class="nutrients-table">
+                        <caption>Nutriments</caption>
+                        <tbody>
+                            
+                            {% set n = result.food.nutrients %}
+                            {% for label, unit in [
+                                ("Energy", "kcal"),
+                                ("Protein", "g"),
+                                ("Total lipid (fat)", "g"),
+                                ("Carbohydrate, by difference", "g"),
+                                ("Fiber, total dietary", "g"),
+                                ("Total Sugars", "g"),
+                                ("Sodium, Na", "mg"),
+                            ] %}
+                            <tr>
+                                <th scope="row">{{ label }}</th>
+                                <td>
+                                    {% if n and label in n %} {{ n[label].value }}
+                                    {{ n[label].unit }} {% else %} — {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="meals-block">
+                        {% if result.meals %}
+                        <p class="matched-note">
+                            Ingrédient recherché sur TheMealDB :
+                            <strong>{{ result.matched_ingredient }}</strong>
+                        </p>
+                        <div class="filter-result">
+                            {% for meal in result.meals %}
+                            <div>
+                                <a href="user/1/details/{{ meal.id }}">
+                                    <img
+                                        src="{{ meal.thumbnail }}/small"
+                                        alt="{{ meal.name }}"
+                                    />
+                                    <p>{{ meal.name }}</p>
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="no-meals">
+                            Aucune recette trouvée pour cet ingrédient.
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+            {% endfor %}
+        </div>
+        {% elif query %}
+        <p class="no-results">Aucun aliment trouvé pour « {{ query }} ».</p>
+        {% endif %}
+    </body>
+</html>

@@ -3,7 +3,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from .src.databaseConn.database import init_db, pool
-from .src.routes import debug, details, filtered, health, root, user, user_stat
+from .src.routes import debug, details, filtered, health, root, user, user_stat, meals
+
 
 
 @asynccontextmanager
@@ -23,3 +24,4 @@ app.include_router(user_stat.router)
 app.include_router(filtered.router)
 app.include_router(debug.router)
 app.include_router(details.router)
+app.include_router(meals.router)

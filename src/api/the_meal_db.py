@@ -13,4 +13,3 @@ async def get_meals_categories() -> list[str]:
             for category in data.get("meals", []):
                 res.append(category.get("strCategory", ""))
     return res
-

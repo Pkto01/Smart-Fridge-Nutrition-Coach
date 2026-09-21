@@ -42,13 +42,14 @@
          source ./venv/bin/activate
 
          # Project related
-         export DB_URL="postgresql://$PGHOST@localhost:5432/$PGDATABASE"
-         
+         export DB_URL="postgresql://localhost:5432/$PGDATABASE"
          export LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath [ pkgs.postgresql.lib ]}:$LD_LIBRARY_PATH"
 
          
-         pip install fastapi pydantic pydantic-settings fastapi[standard] requests psycopg psycopg_pool
+         pip install fastapi pydantic pydantic-settings fastapi[standard] fastapi-cache2 requests psycopg psycopg_pool
+         
          2>/dev/null 1>/dev/null dbeaver &
+         
          fastapi dev main.py
         '';
       };

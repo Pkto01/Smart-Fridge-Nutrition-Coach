@@ -8,7 +8,6 @@ from psycopg_pool import ConnectionPool
 load_dotenv()
 
 DB_URL = os.getenv("DB_URL")
-print("DATABASE URL", DB_URL)
 
 
 pool = ConnectionPool(conninfo=DB_URL, open=False)

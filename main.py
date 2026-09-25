@@ -12,7 +12,8 @@ from .src.routes import (
     user, 
     user_stat, 
     profile,
-    user_create
+    user_create,
+    connection
     )
 
 
@@ -35,4 +36,5 @@ app.include_router(debug.router)
 app.include_router(details.router)
 
 app.include_router(user_create.router)
+app.include_router(connection.router)
 app.include_router(profile.router)

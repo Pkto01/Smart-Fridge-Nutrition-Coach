@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LeFridge - User</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', path='/assets/css/styles.css') }}"
+        />
+    </head>
+
+    <body>
+        <header>
+            <h1>LeFridge</h1>
+        </header>
+        <div class="form-container">
+            <form action="/connection/connecting" method="post">
+                <label for="Email">Email :</label>
+                <input type="email" id="email" name="Email" required />
+
+                <label for="password">Mot de passe :</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    minlength="8"
+                    required
+                />
+
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+    </body>
+    <script>
+        document.querySelector("form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const data = Object.fromEntries(new FormData(form).entries());
+
+            try {
+                const res = await fetch("/connection/connecting", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+
+                if (res.ok) {
+                    const result = await res.json();
+                    console.log("connection resusie :", result);
+                } else {
+                    const errorData = await res.json();
+                    console.error("Détail de l'erreur :", errorData.detail);
+                }
+            } catch (err) {
+                console.error("Erreur :", err);
+            }
+        });
+    </script>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LeFridge - User</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', path='/assets/css/styles.css') }}"
+        />
+    </head>
+
+    <body>
+        <header>
+            <h1>LeFridge</h1>
+        </header>
+        <div class="form-container">
+            <form action="/create_user/creating" method="post">
+                <label for="FirstName">Prénom :</label>
+                <input type="text" id="fname" name="FirstName" required />
+
+                <label for="LastName">Nom de Famille :</label>
+                <input type="text" id="lname" name="LastName" required />
+
+                <label for="Username">Nom d'utilisateur :</label>
+                <input type="text" id="username" name="Username" required />
+
+                <label for="Email">Email :</label>
+                <input type="email" id="email" name="Email" required />
+
+                <label for="password">Mot de passe :</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    minlength="8"
+                    required
+                />
+
+                <label for="gender">Sexe :</label>
+                <select name="gender" id="sexe" required>
+                    {% for nom, membre in sexe.__members__.items() %}
+                    <option value="{{ membre.value }}">{{ membre.value }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="weight">Poids (en kg) :</label>
+                <input
+                    type="number"
+                    min="0"
+                    id="weight"
+                    name="weight"
+                    step="0.1"
+                    required
+                />
+
+                <label for="height">Taille (en cm) :</label>
+                <input type="number" min="0" id="height" name="height" required />
+
+                <label for="age">Âge :</label>
+                <input type="number" min="0" id="age" name="age" required />
+
+                <label for="ActivityLevel">Niveau d'activité :</label>
+                <select name="ActivityLevel" id="ActivityLevel" required>
+                    {% for nom, membre in activity.__members__.items() %}
+                    <option value="{{ membre.value }}">{{ membre.value }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="goal">But :</label>
+                <select name="goal" id="goal" required>
+                    {% for nom, membre in goal.__members__.items() %}
+                    <option value="{{ membre.value }}">{{ membre.value }}</option>
+                    {% endfor %}
+                </select>
+
+                <input type="submit" value="Submit" />
+                <input type="reset" value="Reset" />
+            </form>
+        </div>
+    </body>
+    <script>
+        document.querySelector("form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const data = Object.fromEntries(new FormData(form).entries());
+
+            data.weight = parseFloat(data.weight);
+            data.height = parseInt(data.height);
+            data.age = parseInt(data.age);
+
+            try {
+                const res = await fetch("/create_user/creating", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+
+                if (res.ok) {
+                    const result = await res.json();
+                    console.log("Utilisateur créé :", result);
+                } else {
+                    const errorData = await res.json();
+                    console.error("Détail de l'erreur :", errorData.detail);
+                }
+            } catch (err) {
+                console.error("Erreur réseau :", err);
+            }
+        });
+    </script>
+</html>

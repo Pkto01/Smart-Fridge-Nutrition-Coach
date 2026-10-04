@@ -3,6 +3,7 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
+
 async def get_meals_categories() -> list[str]:
     res: list[str] = []
     url = "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
@@ -13,4 +14,3 @@ async def get_meals_categories() -> list[str]:
             for category in data.get("meals", []):
                 res.append(category.get("strCategory", ""))
     return res
-

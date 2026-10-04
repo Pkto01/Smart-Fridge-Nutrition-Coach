@@ -14,7 +14,10 @@ from .src.routes import (
     profile,
     user_create,
     connection
-    )
+)
+from .src.databaseConn import (
+    userConnection
+)
 
 
 @asynccontextmanager
@@ -37,4 +40,5 @@ app.include_router(details.router)
 
 app.include_router(user_create.router)
 app.include_router(connection.router)
+app.include_router(userConnection.router)
 app.include_router(profile.router)

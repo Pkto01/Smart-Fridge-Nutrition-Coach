@@ -1,72 +1,64 @@
-import datetime
+from datetime import datetime, timedelta, timezone
+from dotenv import load_dotenv
+from fastapi import APIRouter, HTTPException, status
+from fastapi.staticfiles import StaticFiles
 import hashlib
-import hmac
 import jwt
 import os
-from dotenv import load_dotenv
-
 from psycopg.rows import dict_row
+from fastapi import Response
+
 from .database import get_db, pool
 
 load_dotenv()
 
-SECRET_KEY = os.getenv("DB_URL")
+SECRET_JWT_KEY = os.getenv("SECRET_JWT_KEY")
 ALGORITHM = "HS256"
 
+router: APIRouter = APIRouter()
 
-def login_user(login_data) -> dict:
-    raw_password = login_data.password
-    input_password_hash = hashlib.sha512(raw_password.encode("utf-8")).hexdigest()
+router.mount(path="/static", app=StaticFiles(directory="static"), name="static")
 
+@router.post("/token") 
+def login(form_data: dict, response: Response):
     query = """
-        select 
-            id,
-            first_name, 
-            last_name, 
-            email, 
-            username, 
-            password_hash, 
-            gender, 
-            weight, 
-            height, 
-            age, 
-            ActivityLevel, 
-            goal
-        from users
-        where email = %(email)s;
+        SELECT * FROM users
+        WHERE email = %(email)s;
     """
 
-    with pool.connection() as conn:
-        with conn.cursor(row_factory=dict_row) as cur:
-            cur.execute(query, {"email": login_data.mail})
-            user = cur.fetchone()
-
-    if not user:
-        return {"error": "Identifiants invalides"}
-
-    stored_hash = user["password_hash"]
-    if not hmac.compare_digest(input_password_hash, stored_hash):
-        return {"error": "Identifiants invalides"}
-
-    # Génération du payload du JWT
-    expiration = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=1)  # Expiration dans 1 jour
     payload = {
-        "sub": str(user["id"]),
-        "email": user["email"],
-        "username": user["username"],
-        "exp": expiration,  # Expiration du token
-        "iat": datetime.datetime.now(datetime.timezone.utc),  # Issued at
+        "email": form_data.get("email")
     }
 
-    # Signature du token avec PyJWT
-    access_token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+    with pool.connection() as conn:
+        conn.row_factory = dict_row
+        with conn.cursor() as cursor:
+            cursor.execute(query, payload)
+            user = cursor.fetchone()
 
-    # Nettoyage des données sensibles avant retour
-    del user["password_hash"]
+    raw_password = form_data.get("password", "")
+    input_password_hash = hashlib.sha512(raw_password.encode("utf-8")).hexdigest()
 
-    return {
-        "message": "Connexion réussie",
-        "access_token": access_token,
-        "token_type": "bearer",
-        "user": user,
+    if not user or user["password_hash"] != input_password_hash:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="Incorrect email or password"
+        )
+
+    expire = datetime.now(timezone.utc) + timedelta(minutes=30)
+    token_payload = {
+        "sub": user["email"], 
+        "exp": expire
     }
+    token = jwt.encode(token_payload, SECRET_JWT_KEY, algorithm=ALGORITHM)
+
+    response.set_cookie(
+        key="access_token",
+        value=f"Bearer {token}",
+        httponly=True,
+        secure=True,
+        samesite="lax",
+        max_age=1800
+    )
+
+    return {"message": "Connexion réussie"}
